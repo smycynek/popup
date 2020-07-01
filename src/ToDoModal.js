@@ -4,10 +4,12 @@ import Modal from 'react-modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { connect } from 'react-redux';
-import { reduxForm, Field, getFormValues } from 'redux-form';
-const required = value => value ? undefined : 'Required'
+import {
+  reduxForm, Field, getFormValues,
+} from 'redux-form';
 
-
+const required = (value) => (value ? undefined : 'Required Field');
+const tooShort = (value) => (value && value.length < 5 ? 'Write more!' : undefined);
 
 const modalStyles = {
   content: {
@@ -20,7 +22,19 @@ const modalStyles = {
   },
 };
 
-function ToDoModal({formValues, invalid}) {
+const EnhancedInput = ({
+  input, label, type, meta: { touched, error, warning },
+}) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={`Enter ${label}`} type={type} />
+      <small id="descriptionTongs" className="form-text text-danger">{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</small>
+    </div>
+  </div>
+);
+
+function ToDoModal({ formValues, invalid, reset }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -30,7 +44,15 @@ function ToDoModal({formValues, invalid}) {
     // references are now sync'd and can be accessed.
   }
 
-  function closeModal() {
+  const handleSubmit = () => {
+    closeModal(true);
+    return new Promise(() => {});
+  };
+
+  function closeModal(fromOkay) {
+    if (!(fromOkay === true)) {
+      reset();
+    }
     setIsOpen(false);
   }
   return (
@@ -46,27 +68,27 @@ function ToDoModal({formValues, invalid}) {
         <h2 className="text-primary">Todo Item</h2>
         <form>
           <div>
-            
-          <div class="form-group">
-              <label for="Description">Description</label>
-                <Field validate={[required]} className="form-control" name="description" component="input" type="text" />
-                <small id="descriptionHelp" class="form-text text-muted">What's going on?</small>
-            </div> 
-       
-            <div class="form-group form-check">
-              <Field className="form-check-input" name="tongs" component="input" type="checkbox" />
-              <label className="form-check-label" for="tongs">Will require tongs?</label>
-              <small id="descriptionTongs" class="form-text text-muted">Is it a sticky job?  Need to keep your distance?</small>
+
+            <div className="form-group">
+              <Field label="Description" validate={[required, tooShort]} className="form-control" name="description" component={EnhancedInput} type="text" />
+              <small id="descriptionTongs" className="form-text text-muted">What's going on?</small>
 
             </div>
 
-            <div class="form-group">
-              <label for="difficulty">Difficulty</label>
-                <Field className="form-control-range" name="difficulty" component="input" type="range" min={1} max={10} />
-                <small id="difficultyHelp" class="form-text text-muted">How hard is this? Scale of one to ten?</small>
-              </div>
-          
-            <button disabled={invalid} className="btn btn-primary" onClick={closeModal}>OK</button>
+            <div className="form-group form-check">
+              <Field className="form-check-input" name="tongs" component="input" type="checkbox" />
+              <label className="form-check-label" htmlFor="tongs">Will require tongs?</label>
+              <small id="descriptionTongs" className="form-text text-muted">Is it a sticky job?  Need to keep your distance?</small>
+
+            </div>
+
+            <div className="form-group">
+              <label className="form-check-label" htmlFor="difficultt">Difficulty</label>
+              <Field className="form-control-range" name="difficulty" component="input" type="range" min={1} max={10} />
+              <small id="difficultyHelp" className="form-text text-muted">How hard is this? Scale of one to ten?</small>
+            </div>
+
+            <button disabled={invalid} className="btn btn-primary" onClick={handleSubmit}>OK</button>
           </div>
         </form>
       </Modal>
@@ -78,6 +100,7 @@ const mapStateToProps = (state) => ({
   formValues: getFormValues('ToDoList')(state),
 });
 
+// eslint-disable-next-line no-unused-vars
 const mapDispatchToProps = (dispatch) => ({});
 
 const ToDoReduxForm = reduxForm({
@@ -88,3 +111,7 @@ const ToDoReduxForm = reduxForm({
 const ToDoForm = connect(mapStateToProps, mapDispatchToProps)(ToDoReduxForm);
 
 export default ToDoForm;
+
+// TODO
+
+// CANCEL VS OK

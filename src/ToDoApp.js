@@ -9,7 +9,7 @@ function ToDoAppCore({ formValues }) {
   return (
     <div>
       <h1 className="text-primary">ReduxForm Fun</h1>
-      <ToDoForm />
+      <ToDoForm initialValues={{ difficulty: 5, tongs: false }} />
 
       <div className="row">
         <div className="col-sm">
@@ -25,11 +25,13 @@ function ToDoAppCore({ formValues }) {
           <span className="text-dark">
             Requires Tongs:
             {' '}
-
-            {
-            formValues && 
-            <span> {formValues.tongs ? 'true' : 'false'} </span>
-            }
+            {formValues && (
+            <span>
+              {' '}
+              {formValues.tongs.toString()}
+              {' '}
+            </span>
+            )}
           </span>
         </div>
       </div>
@@ -42,8 +44,10 @@ function ToDoAppCore({ formValues }) {
           </span>
         </div>
       </div>
-      <hr/>
-      <a href='https://github.com/smycynek/popup'>https://github.com/smycynek/popup</a>
+      <hr />
+      <a href="https://github.com/smycynek/popup">
+        https://github.com/smycynek/popup
+      </a>
     </div>
   );
 }
