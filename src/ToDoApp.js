@@ -8,8 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function ToDoAppCore({ formValues }) {
   return (
     <div>
-      <h1 className="text-primary">ToDo Item</h1>
-      <h2 className="text-secondary">Fun with ReduxForm</h2>
+      <h1 className="text-primary">ReduxForm Fun</h1>
       <ToDoForm />
 
       <div className="row">

@@ -16,7 +16,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
     <div className="container-fluid">
-    <ToDoApp labelColor={'green'} />
+    <ToDoApp/>
     </div>
     </Provider>
   </React.StrictMode>,
