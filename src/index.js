@@ -12,6 +12,7 @@ import { reducer } from './reducers';
 const store = createStore(
   reducer,
   {},
+  // eslint-disable-next-line no-underscore-dangle
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
@@ -19,7 +20,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <div className="container-fluid">
-        <ToDoApp />
+        <ToDoApp id="app" />
       </div>
     </Provider>
   </React.StrictMode>,

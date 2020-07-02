@@ -56,6 +56,7 @@ const mapStateToProps = (state) => ({
   formValues: getFormValues('ToDoList')(state),
 });
 
+// eslint-disable-next-line no-unused-vars
 const mapDispatchToProps = (dispatch) => ({});
 
 const ToDoApp = connect(mapStateToProps, mapDispatchToProps)(ToDoAppCore);

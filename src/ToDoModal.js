@@ -1,6 +1,9 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import Modal from 'react-modal';
+import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { connect } from 'react-redux';
@@ -18,50 +21,49 @@ const modalStyles = {
     right: '50%',
     bottom: 'auto',
     marginRight: '-25%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate(-30%, -70%)',
+    border: '2px solid black',
+    padding: '20px',
+
   },
 };
 
 const EnhancedInput = ({
-  input, label, type, meta: { touched, error, warning },
+  input, label, type, meta: {touched, error },
 }) => (
   <div>
     <label>{label}</label>
     <div>
       <input {...input} placeholder={`Enter ${label}`} type={type} />
-      <small id="descriptionTongs" className="form-text text-danger">{touched && ((error && <span>{error}</span>) || (warning && <span>{warning}</span>))}</small>
+      <small id="descriptionTongs" className="form-text text-danger">{touched && (error && <span>{error}</span>) }</small>
     </div>
   </div>
 );
 
-function ToDoModal({ formValues, invalid, reset }) {
+function ToDoModal({ invalid, reset }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  const handleSubmit = () => {
-    closeModal(true);
-    return new Promise(() => {});
-  };
-
-  function closeModal(fromOkay) {
+  function close(fromOkay) {
     if (!(fromOkay === true)) {
       reset();
     }
     setIsOpen(false);
   }
+
+  const handleSubmit = () => {
+    close(true);
+    return new Promise(() => {});
+  };
+
   return (
     <div>
-      <button className="btn btn-primary" onClick={openModal}>Edit item...</button>
+      <button type="submit" className="btn btn-primary" onClick={openModal}>Edit item...</button>
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
+        onRequestClose={close}
         style={modalStyles}
         contentLabel="Todo item"
       >
@@ -83,12 +85,12 @@ function ToDoModal({ formValues, invalid, reset }) {
             </div>
 
             <div className="form-group">
-              <label className="form-check-label" htmlFor="difficultt">Difficulty</label>
+              <label className="form-check-label" htmlFor="difficulty">Difficulty</label>
               <Field className="form-control-range" name="difficulty" component="input" type="range" min={1} max={10} />
               <small id="difficultyHelp" className="form-text text-muted">How hard is this? Scale of one to ten?</small>
             </div>
 
-            <button disabled={invalid} className="btn btn-primary" onClick={handleSubmit}>OK</button>
+            <button type="submit" disabled={invalid} className="btn btn-primary" onClick={handleSubmit}>Submit</button>
           </div>
         </form>
       </Modal>
@@ -112,6 +114,7 @@ const ToDoForm = connect(mapStateToProps, mapDispatchToProps)(ToDoReduxForm);
 
 export default ToDoForm;
 
-// TODO
-
-// CANCEL VS OK
+ToDoModal.propTypes = {
+  invalid: PropTypes.bool,
+  reset: PropTypes.func,
+};
