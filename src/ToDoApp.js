@@ -6,10 +6,18 @@ import ToDoForm from './ToDoModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ToDoAppCore({ formValues }) {
+  const [lastSubmitted, setLastSubmitted] = React.useState(false);
+
+  const lastCallHandler = () => {
+    setLastSubmitted((new Date()).toString());
+  };
   return (
     <div>
       <h1 className="text-primary">ReduxForm Fun</h1>
-      <ToDoForm initialValues={{ difficulty: 5, tongs: false }} />
+      <ToDoForm
+        initialValues={{ difficulty: 5, tongs: false }}
+        onSubmitCallback={lastCallHandler}
+      />
 
       <div className="row">
         <div className="col-sm">
@@ -44,6 +52,17 @@ function ToDoAppCore({ formValues }) {
           </span>
         </div>
       </div>
+      <div className="row">
+        <div className="col-sm">
+          <small id="lastSubmittedNote" className="form-text text-muted">
+            {' '}
+            Modal last submitted?
+            {' '}
+            {lastSubmitted}
+          </small>
+        </div>
+      </div>
+
       <hr />
       <a href="https://github.com/smycynek/popup">
         https://github.com/smycynek/popup

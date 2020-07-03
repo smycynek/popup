@@ -40,7 +40,7 @@ const EnhancedInput = ({
   </div>
 );
 
-function ToDoModal({ invalid, reset }) {
+function ToDoModal({ invalid, reset, onSubmitCallback }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -50,6 +50,7 @@ function ToDoModal({ invalid, reset }) {
     if (!(fromOkay === true)) {
       reset();
     }
+    onSubmitCallback();
     setIsOpen(false);
   }
 
@@ -60,7 +61,7 @@ function ToDoModal({ invalid, reset }) {
 
   return (
     <div>
-      <button type="submit" className="btn btn-primary" onClick={openModal}>Edit item...</button>
+      <button type="button" className="btn btn-primary" onClick={openModal}>Edit item...</button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={close}
@@ -68,7 +69,7 @@ function ToDoModal({ invalid, reset }) {
         contentLabel="Todo item"
       >
         <h2 className="text-primary">Todo Item</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
 
             <div className="form-group">
@@ -90,7 +91,7 @@ function ToDoModal({ invalid, reset }) {
               <small id="difficultyHelp" className="form-text text-muted">How hard is this? Scale of one to ten?</small>
             </div>
 
-            <button type="submit" disabled={invalid} className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            <button type="submit" disabled={invalid} className="btn btn-primary">Submit</button>
           </div>
         </form>
       </Modal>
@@ -111,6 +112,8 @@ const ToDoReduxForm = reduxForm({
 })(ToDoModal);
 
 const ToDoForm = connect(mapStateToProps, mapDispatchToProps)(ToDoReduxForm);
+
+Modal.setAppElement(document.getElementById('root'));
 
 export default ToDoForm;
 
