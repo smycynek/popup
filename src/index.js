@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import ToDoApp from './ToDoApp';
 import * as serviceWorker from './serviceWorker';
-import { reducer } from './reducers';
+import reducer from './reducers';
 
 const store = createStore(
   reducer,

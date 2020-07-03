@@ -1,5 +1,7 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 import ToDoForm from './ToDoModal';
@@ -70,6 +72,11 @@ function ToDoAppCore({ formValues }) {
     </div>
   );
 }
+
+ToDoAppCore.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  formValues: PropTypes.object,
+};
 
 const mapStateToProps = (state) => ({
   formValues: getFormValues('ToDoList')(state),

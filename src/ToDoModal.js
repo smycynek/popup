@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/require-default-props */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-filename-extension */
@@ -29,7 +30,8 @@ const modalStyles = {
 };
 
 const EnhancedInput = ({
-  input, label, type, meta: {touched, error },
+  // eslint-disable-next-line react/prop-types
+  input, label, type, meta: { touched, error },
 }) => (
   <div>
     <label>{label}</label>
@@ -39,6 +41,15 @@ const EnhancedInput = ({
     </div>
   </div>
 );
+
+EnhancedInput.propTypes = {
+  type: PropTypes.string,
+  label: PropTypes.string,
+  meta: PropTypes.shape({
+    touched: PropTypes.bool,
+    error: PropTypes.string,
+  }),
+};
 
 function ToDoModal({ invalid, reset, onSubmitCallback }) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -74,7 +85,7 @@ function ToDoModal({ invalid, reset, onSubmitCallback }) {
 
             <div className="form-group">
               <Field label="Description" validate={[required, tooShort]} className="form-control" name="description" component={EnhancedInput} type="text" />
-              <small id="descriptionTongs" className="form-text text-muted">What's going on?</small>
+              <small id="descriptionTongs" className="form-text text-muted">What&apos;s going on?</small>
 
             </div>
 
@@ -120,4 +131,5 @@ export default ToDoForm;
 ToDoModal.propTypes = {
   invalid: PropTypes.bool,
   reset: PropTypes.func,
+  onSubmitCallback: PropTypes.func,
 };

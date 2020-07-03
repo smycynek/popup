@@ -39,7 +39,7 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all '
-                  + 'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
+                  + 'tabs for this page are closed. See https://bit.ly/CRA-PWA.',
               );
 
               // Execute callback
@@ -91,7 +91,7 @@ function checkValidServiceWorker(swUrl, config) {
     })
     .catch(() => {
       console.log(
-        'No internet connection found. App is running in offline mode.'
+        'No internet connection found. App is running in offline mode.',
       );
     });
 }
@@ -119,7 +119,7 @@ export function register(config) {
         navigator.serviceWorker.ready.then(() => {
           console.log(
             'This web app is being served cache-first by a service '
-              + 'worker. To learn more, visit https://bit.ly/CRA-PWA'
+              + 'worker. To learn more, visit https://bit.ly/CRA-PWA',
           );
         });
       } else {
